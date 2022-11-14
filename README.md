@@ -1,4 +1,4 @@
-# MC-post
-Mark coordinate position (including copy)
-use pyperclip
-use alive_progress
+# MC-post\n
+Mark coordinate position (including copy)\n
+use pyperclip\n
+use alive_progress\n
