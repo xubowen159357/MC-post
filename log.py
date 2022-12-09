@@ -3,49 +3,54 @@ import os
 import time
 print('''From xu.bw.
 Use logging.''')
-_________=False
-__________=False
-______ = None
-_____ = './log/late-log.log'
+Log_v_main9=False
+Log_v_main10=False
+Log_v_main6 = None
+Log_v_main5 = './log/late-log.log'
 def save():
     print('These log will seve in "./log/late-log.log"')
     if not os.path.exists('./log'):
         os.system('md .\log')
-    if os.path.exists(_____):
-        __ = open(_____, 'r')
-        _ = __.readlines()
-        ______ = _[0]
-        __.close()
-        ________ = ['：' if i == ':' else i for i in ______]
-        ________.pop(________.index('\n'))
-        _______ = ''
-        for i in ________:
-            _______ += i
-        os.system('ren ".\log\late-log.log" "'+_______+'.log"')
-    if not os.path.exists(_____):
-        __ = open(_____, 'w')
-        ___ = time.asctime(time.localtime())
-        ____ = [___, '\n']
-        __.writelines(____)
-        __.close()
-    logging.basicConfig(filename=_____, level=logging.NOTSET, filemode='a',format='%(asctime)s : %(levelname)s level:%(levelno)s Log:%(message)s', datefmt='%m/%d/%Y %I:%M:%S world.tiem=%p')
+        Log_v_main2 = open(Log_v_main5, 'w')
+        Log_v_main3 = time.asctime(time.localtime())
+        Log_v_main4 = [Log_v_main3, '\n']
+        Log_v_main2.writelines(Log_v_main4)
+        Log_v_main2.close()
+    if os.path.exists(Log_v_main5):
+        Log_v_main2 = open(Log_v_main5, 'r')
+        Log_v_main1 = Log_v_main2.readlines()
+        Log_v_main6 = Log_v_main1[0]
+        Log_v_main2.close()
+        Log_v_main8 = ['：' if i == ':' else i for i in Log_v_main6]
+        Log_v_main8.pop(Log_v_main8.index('\n'))
+        Log_v_main7 = ''
+        for i in Log_v_main8:
+            Log_v_main7 += i
+        os.system('ren ".\log\late-log.log" "'+Log_v_main7+'.log"')
+    if not os.path.exists(Log_v_main5):
+        Log_v_main2 = open(Log_v_main5, 'w')
+        Log_v_main3 = time.asctime(time.localtime())
+        Log_v_main4 = [Log_v_main3, '\n']
+        Log_v_main2.writelines(Log_v_main4)
+        Log_v_main2.close()
+    logging.basicConfig(filename=Log_v_main5, level=logging.NOTSET, filemode='a',format='%(asctime)s : %(levelname)s level:%(levelno)s Log:%(message)s', datefmt='%m/%d/%Y %I:%M:%S world.tiem=%p')
 def _DELOLDLOG(*Any):
     print('不用管XXX\log\late-log.log因为他是当前的日志!')
     time.sleep(0.5)
     os.system('DEL /Q /S ".\log\*.*"')
 def DEBUGANDHAIGHSHOW(bool_int:int)->bool:
-    global _________
-    _________=bool(bool_int)
+    global Log_v_main9
+    Log_v_main9=bool(bool_int)
 def INFOANDHAIGHSHOW(bool_int:int)->bool:
-    global __________
-    __________=bool(bool_int)
+    global Log_v_main10
+    Log_v_main10=bool(bool_int)
 def debug(orj: str, *args, **kwargs):
     logging.debug(orj, *args, **kwargs)
-    if _________:
+    if Log_v_main9:
         print('\033[32mDEBUG:root:\033[0m%s'%orj)
 def info(orj: str, *args, **kwargs):
     logging.info(orj, *args, **kwargs)
-    if __________ or _________:
+    if Log_v_main10 or Log_v_main9:
         print('\033[34mINFO:root:\033[0m%s'%orj)
 def error(orj: str, *args, **kwargs):
     logging.error(orj, *args, **kwargs)

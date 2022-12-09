@@ -41,7 +41,7 @@ def main_log(log_line:list):
         for i in log_line:
             if i == get_True_line[1]:  
                 return '1'
-    if not log_line_type:
+    elif not log_line_type:
         print('log.save=FALSE or Can not catch! wll use def!')
         log.info('log.save=FALSE or Can not catch! wll use def!')
         return '1'
