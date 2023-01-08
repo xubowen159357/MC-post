@@ -38,10 +38,10 @@ def _DELOLDLOG(*Any):
     print('不用管XXX\log\late-log.log因为他是当前的日志!')
     time.sleep(0.5)
     os.system('DEL /Q /S ".\log\*.*"')
-def DEBUGANDHAIGHSHOW(bool_int:int)->bool:
+def DEBUGANDHAIGHSHOW(bool_int:int)->bool: # type: ignore
     global Log_v_main9
     Log_v_main9=bool(bool_int)
-def INFOANDHAIGHSHOW(bool_int:int)->bool:
+def INFOANDHAIGHSHOW(bool_int:int)->bool: # type: ignore
     global Log_v_main10
     Log_v_main10=bool(bool_int)
 def debug(orj: str, *args, **kwargs):
