@@ -1,23 +1,33 @@
-import os
-import os.path as op
-import sys
-import tkinter as tk
-from tkinter.messagebox import showinfo, showwarning
-
+verion = '1.10'
 try:
+	import os
+	import os.path as op
+	import sys
+	import tkinter as tk
+	from tkinter.messagebox import showinfo, showwarning
 	import pyperclip
 	from ping3 import ping
 	import get_info as gi
 	import log
 	import OPTION
-	from mcpi import minecraft
-	showwarning('info','本程序完全开源免费：https://github.com/xubowen159357/mcpost \n本产品不能用于商业用途！')
+	from mcpi import minecraft as mc
+except BaseException as e:
+	file=open('#FATAL-logging.log','w',encoding='utf-8')
+	file.write(str(e)+'\nNot find the MODULE. Most of these errors come from insecure sources, confirming that you are using official compilations.\
+\n无法找到模块。大部分出现这种错误来自于不安全的来源，确认使用的是官方编译。')
+	file.close()
+	exit()
+
+try:
 	main = tk.Tk()
+	main.withdraw()
+	showwarning('info','本程序完全开源免费：https://github.com/xubowen159357/mcpost \n本产品不能用于商业用途！')
+	main.deiconify()
 	__=True
 	_=True
 	option=OPTION
 	def gethost(host):
-		ttl=os.popen('ping -c 1 -n 1 -w 1 %s'%host).read()
+		ttl=os.popen('ping -n 1 -w 1 %s'%host).read()
 		if '的 Ping 统计信息' in ttl:return 'online'
 		else:return 'offline'
 	def save():
@@ -43,7 +53,8 @@ try:
 	log.info('Resource check is start.')
 	if2=[]
 	file=open("./time_things.out","w")
-	to_test_lset=['data/__mine_icon-32x32-__','data/__mine_icon-16x16-__','data\world_post.map-post','data\world_post.map-name','./Opti','./Opti/option.txt','./Opti/log.save.txt','data']
+	to_test_lset=['data/__mine_icon__','data','data\world_post.map-post','data\world_post.map-name'\
+					,'./Opti','./Opti/option.txt', './Opti/log.save.txt','data']
 	for i in to_test_lset:
 		if i =='data\world_post.map-name':
 			print('\033[32m')
@@ -61,17 +72,11 @@ try:
 	except:
 		pass
 	if if2[0]=='f':
-		log.critical('Failed to find storage table "data\__mine_icon-32x32-__"')
-		print('\033[1;31mFailed to find storage table "data\__mine_icon-32x32-__"')
+		log.critical('Failed to find storage table "data\__mine_icon__"')
+		print('\033[1;31mFailed to find storage table "data\__mine_icon__"')
 		print('\033[1;31m⚠︎ __Catastrophic error!')
 		print('\033[1;31mCannot continue!\033[0m')
 		sys.exit(1)
-	if if2[1]=='f':
-		log.critical('Failed to find storage table "data\__mine_icon-16x16-__"')
-		print('\033[1;31mFailed to find storage table "data\__mine_icon-16x16-__"')
-		print('\033[1;31m⚠︎ __Catastrophic error!')
-		print('\033[1;31mCannot continue!\033[0m')
-		os._exit(1)
 	if if2[3]=='f':
 		log.error('Failed to find storage table "world_ Post.map-name"')
 		os.system('DEL data\world_post.map-name')
@@ -93,29 +98,28 @@ try:
 		os.system('md Opti')
 		file=open('Opti\option.txt','w')
 		file.write('''option.type=TRUE
-	Log.SHW_D=FALSE
-	Log.SHW_I=TRUE
-	USE_data=FALSE
-	Test-ip.timeout=0.5''')
+Log.SHW_D=FALSE
+Log.SHW_I=TRUE
+USE_data=FALSE
+Test-ip.timeout=0.5''')
 		file=open('./Opti/log.save.txt','w')
 		file.write('''log.seve.type=TRUE
-	Log.seve=TRUE''')
+Log.seve=TRUE''')
 	if if2[5]=='f' and if2[4]=='t':
 		log.error('Failed to find storage table "Opti\option.txt", creating now...')
 		file=open('Opti\option.txt','w')
 		file.write('''option.type=TRUE
-	Log.SHW_D=FALSE
-	Log.SHW_I=TRUE
-	USE_data=FALSE
-	Test-ip.timeout=0.5''')
+Log.SHW_D=FALSE
+Log.SHW_I=TRUE
+USE_data=FALSE
+Test-ip.timeout=0.5''')
 	if if2[6]=='f' and if2[4]=='t':
 		log.error('Failed to find storage table "./Opti/log.save.txt", creating now...')
 		file=open('./Opti/log.save.txt','w')
 		file.write('''log.seve.type=TRUE
-	Log.seve=TRUE''')
+Log.seve=TRUE''')
 	if if2[7]=='f':
-		log.error('Failed to find storage table "./data", creating now...')
-		os.system('md data')
+		log.critical('Failed to find storage table "./data", stop.')
 	log.info('Repair complete!')
 	print('\033[32mcomplete.')
 	if os.path.exists('./Opti/log.save.txt'):
@@ -158,20 +162,13 @@ try:
 	log.info('Pus loading is stop.')
 	log.info('Run now!')
 	file.close()
-	__ico32x32__='data\__mine_icon-32x32-__'
-	__ico16x16__='data\__mine_icon-16x16-__'
-	ico=''
+	__ico__='data\__mine_icon__'
 	main.title('Minecraft 坐标记录仪')
 	main.geometry('1000x600')
 	window_size=str(main.winfo_screenwidth())+'x'+str(main.winfo_screenheight())
-	if window_size=='1920x1080':
-		main.tk.call('wm', 'iconphoto', main._w, tk.PhotoImage(file=__ico32x32__)) # type: ignore
-		ico='32x32'
-	else:
-		main.tk.call('wm', 'iconphoto', main._w, tk.PhotoImage(file=__ico16x16__)) # type: ignore
-		ico='16x16'
-	log.info('Your resolving power is '+window_size+',select icon is '+ico+' pxel.')
-	print('\033[33mYour resolving power is %s,select icon is %s pxel\033[0m'%(window_size,ico))
+	main.tk.call('wm', 'iconphoto', main._w, tk.PhotoImage(file=__ico__)) # type: ignore
+	log.info('Your resolving power is '+window_size+',select icon is 128x128 pxel.')
+	print('\033[33mYour resolving power is %s,select icon is %s pxel\033[0m'%(window_size,'128x128'))
 	var = tk.StringVar()
 	var.set('PS>')
 	l = tk.Label(main, textvariable=var, bg='black', fg='white', font=('Arial', 12), width=60, height=2, padx=0)
@@ -182,6 +179,7 @@ try:
 	class Ai:
 		def __init__(self) -> None:
 			self.AI_save=False
+			self.AI_c=False
 			if os.path.exists('Opti\AI'):
 				print('AI is open')
 				opens=open('Opti\AI','r')
@@ -190,18 +188,19 @@ try:
 				self.AI_save=True
 		def setAi(self, Bool:bool):
 			self.AI_save=Bool
+			self.AI_c=True
 	HC=Ai()
-	def the_mc():
+	def mcpi_():
 		tk2=tk.Toplevel()
 		tk2.minsize(400,400)
 		tk2.title('Use mcpi')
-		tk2.tk.call('wm', 'iconphoto', tk2._w, tk.PhotoImage(file=__ico16x16__))
+		tk2.tk.call('wm', 'iconphoto', tk2._w, tk.PhotoImage(file=__ico__))
+		showinfo('info','如要使用mcpi确保已安装raspberryjammod!')
+		tk2.deiconify()
 		GetIp=tk.Spinbox(tk2, values='ip')
 		GetIp.pack(side='top')
 		Getport=tk.Spinbox(tk2, values='port:int')
 		Getport.pack()
-		GetPlayerName=tk.Spinbox(tk2, values='player-name')
-		GetPlayerName.pack()
 		def Got():
 			global post
 			try:
@@ -209,16 +208,19 @@ try:
 				mc_sever_fand_error+=str(GetIp.get())
 				if mc_sever_fand_error.count('.')<2:
 					showwarning('错误','ip错误')
+					tk2.deiconify()
 				else:
-					mc_sever=minecraft.Minecraft.create(GetIp.get(),int(Getport.get()))
-					x,y,z=mc_sever.getPlayerPosition(GetPlayerName)
+					mc_sever=mc.Minecraft.create(GetIp.get(),int(Getport.get()))
+					x,y,z=mc_sever.player.getPos()
 					list_for.append(x+y+z)
 					list.append(x+' '+y+' '+z)
 					lb.insert('end', x+' '+y+' '+z)
-			except OSError:
-				showwarning('错误','ip错误')
+			except OSError as es:
+				showwarning('错误','ip错误:%s'%es)
+				tk2.deiconify()
 			except:
-				showwarning('错误','玩家名字错误')
+				showwarning('错误','Num errer')
+				tk2.deiconify()
 			try:
 				post=[x,y,z]
 			except:pass
@@ -228,7 +230,7 @@ try:
 	def test():
 		tk2=tk.Toplevel()
 		tk2.title('Test ip')
-		tk2.tk.call('wm', 'iconphoto', tk2._w, tk.PhotoImage(file=__ico16x16__))
+		tk2.tk.call('wm', 'iconphoto', tk2._w, tk.PhotoImage(file=__ico__))
 		tk2.minsize(400,400)
 		Var = tk.StringVar()
 		lboftry=tk.Label(tk2,width=20)
@@ -251,6 +253,7 @@ try:
 			cip=[]
 			cip+=ip
 			if cip.count('.')>0:
+				print('start')
 				if gethost(ip)=='online':
 					a=ping_host(ip)
 					if not a=='time out':add='ms'
@@ -363,11 +366,11 @@ try:
 		{gi1.os}
 				{gi1.getos('name')},{gi.pf.architecture()[0]}
 	name:{gi.pf.node()}
-	坐标记录仪版本：1.2
+	坐标记录仪版本：{verion}
 	主窗口大小：{main.winfo_width()}*{main.winfo_height()+20}
 	使用的语言：'''
 		buit1.geometry('550x300')
-		buit1.tk.call('wm', 'iconphoto', buit1._w, tk.PhotoImage(file=__ico16x16__))
+		buit1.tk.call('wm', 'iconphoto', buit1._w, tk.PhotoImage(file=__ico__))
 		lb1 = tk.Label(buit1, text=text1,
 						width=60,
 						height=10,
@@ -380,7 +383,7 @@ try:
 		lb1.pack()
 		long.pack()
 		buit1.mainloop()
-	def _lb2():
+	def about_save():
 		showinfo('info','所有的更改将会在重启后生效')
 		if os.path.exists('Opti\AI'):
 			opens=open('Opti\AI','r')
@@ -396,30 +399,47 @@ try:
 				new=open("Opti\AI",'w')
 				new.write('1000')
 				new.close()
+		def diclose():
+			win.destroy()
+			if HC.AI_c == True:
+				win2=tk.Toplevel()
+				win2.geometry('550x300')
+				win2.tk.call('wm', 'iconphoto', win2._w, tk.PhotoImage(file=__ico__))
+				def boff1():
+					win2.destroy()
+				def bon1():
+					main.destroy()
+				lib=tk.Label(win2,text='是否重启以启用？')
+				boff=tk.Button(win2,text='否',command=boff1)
+				bon=tk.Button(win2,text='是',command=bon1)
+				lib.pack()
+				boff.pack()
+				bon.pack()
 		win=tk.Toplevel()
 		win.geometry('550x300')
-		win.tk.call('wm', 'iconphoto', win._w, tk.PhotoImage(file=__ico16x16__))
+		win.tk.call('wm', 'iconphoto', win._w, tk.PhotoImage(file=__ico__))
 		on=tk.Label(win)
-		one=tk.Button(win,text='打开或根本自动保存',command=set)
+		one=tk.Button(win,text='打开或关闭自动保存',command=set)
 		if HC.AI_save:
 			on.config(text='目前打开')
 		else:
 			on.config(text='目前关闭')
 		on.pack()
 		one.pack()
+		win.protocol("WM_DELETE_WINDOW", diclose)
 	class menu:
 		def __init__(self) -> None:
 			self.menu=tk.Menu(main,tearoff=0)
 			self.menu.add_command(label='help',command=self.help)
 			self.menu.add_command(label='About os',command=_lb1)
 		def help(self):
-			showinfo('Hlep','version 1.2')
+			showinfo('Hlep','version '+verion)
 	class menu2:
 		def __init__(self) -> None:
 			self.menu=tk.Menu(main,tearoff=0)
-			self.menu.add_command(label='Use mcpi',command=the_mc)
+			self.menu.add_command(label='Use mcpi',command=mcpi_)
 			self.menu.add_command(label='Test ip',command=test)
-			self.menu.add_command(label='自动保存',command=_lb2)
+			self.menu.add_command(label='自动保存',command=about_save)
 	if __name__ == '__main__':
 			mebubar=tk.Menu(main)
 			mebubar.add_cascade(label='other|选项',menu=menu2().menu)
@@ -454,5 +474,5 @@ try:
 			main.config(menu=mebubar)
 			main.after(0,in_end)
 			main.mainloop()
-except ZeroDivisionError as e:
+except BaseException as e:
     showwarning('CRITICAL',f'错误始程序无法运行：{e}')
